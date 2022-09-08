@@ -10,6 +10,11 @@ func NewPromise() (p js.Value, resolve func(interface{}), reject func(interface{
 		cbFunc.Release()
 
 		resolve = func(value interface{}) {
+			Log(6, value)
+			Log(value)
+			Log(6.1, value)
+			// args[0].Invoke("test resolve result")
+
 			args[0].Invoke(value)
 		}
 

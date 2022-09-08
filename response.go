@@ -10,11 +10,15 @@ type ResponseRecorder struct {
 	*httptest.ResponseRecorder
 }
 
+type Wrapper interface{ JSValue() js.Value }
+
 func NewResponseRecorder() ResponseRecorder {
 	return ResponseRecorder{httptest.NewRecorder()}
 }
 
-var _ js.Wrapper = ResponseRecorder{}
+var _ Wrapper = ResponseRecorder{}
+
+// var _ js.Wrapper = ResponseRecorder{}
 
 func (rr ResponseRecorder) JSValue() js.Value {
 	var res = rr.Result()

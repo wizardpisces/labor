@@ -31,6 +31,7 @@ func Serve(handler http.Handler) func() {
 			defer func() {
 				if r := recover(); r != nil {
 					if err, ok := r.(error); ok {
+						Log(8, err)
 						reject(fmt.Sprintf("labor: panic: %+v\n", err))
 					} else {
 						reject(fmt.Sprintf("labor: panic: %v\n", r))
@@ -39,10 +40,14 @@ func Serve(handler http.Handler) func() {
 			}()
 
 			var res = NewResponseRecorder()
-
+			Log(args[0])
+			Log(1, args, res)
 			h.ServeHTTP(res, Request(args[0]))
 
-			resolve(res)
+			Log(5)
+			resolve(res.JSValue())
+			Log(7)
+
 		}()
 
 		return resPromise
